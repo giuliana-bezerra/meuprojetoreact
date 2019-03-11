@@ -14,3 +14,12 @@ header {
   color: white;
   padding: .7em 1.5em 0;
 }
+
+.formListagem {
+  text-align: center;
+}
+
+form {
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
