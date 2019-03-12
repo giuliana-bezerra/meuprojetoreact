@@ -5,7 +5,7 @@ import {Button} from 'primereact/button';
 class HomeForm extends Component {
     constructor() {
         super();
-        this.state = {comentario: ''};
+        this._comentario = '';
     }
 
     render() {
@@ -13,7 +13,7 @@ class HomeForm extends Component {
             <div>
                 <form onSubmit={event => this.comentar(event)}>
                     <InputTextarea placeholder="Adicione o comentário..." rows={5} cols={30}
-                    value={this.state.comentario} onChange={(e) => this.setState({comentario: e.target.value})}/>
+                    onChange={e => this._comentario = e.target.value}/>
                     <br/>
                     <Button label="Enviar"/>
                 </form>
@@ -23,8 +23,7 @@ class HomeForm extends Component {
 
     comentar(event) {
         event.preventDefault();
-        this.props.comentar(this.state.comentario);
-        this.setState({comentario: ''});
+        this.props.comentar(this._comentario);
     }
 }
 

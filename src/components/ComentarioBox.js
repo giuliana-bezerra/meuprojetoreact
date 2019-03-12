@@ -1,27 +1,40 @@
 import React, {Component} from 'react';
 import HomeForm from './HomeForm';
 import HomeList from './HomeList';
+import { store } from '../store';
+import { connect } from 'react-redux';
+import { comentar } from '../actions/actionCreator';
+import ComentarioController from '../controllers/ComentarioController';
+
+const controller = new ComentarioController();
 
 class ComentarioBox extends Component {
-    constructor() {
-        super();
-        this.state = {comentarios: []};
-    }
-
     render() {
         return (
             <div className="formListagem">
-                <HomeForm comentar={this.comentar.bind(this)}/>
-                <HomeList comentarios={this.state.comentarios}/>
+                <HomeForm comentar={this.props.comentar}/>
+                <HomeList comentarios={this.props.comentarios}/>
             </div>
         );
     }
 
-    comentar(comentario) {
-        const novosComentarios = this.state.comentarios;
-        novosComentarios.push({comentario, nome: 'N/A'});
-        this.setState({comentarios: novosComentarios});
+    componentDidMount() {
+        this.props.listar();
     }
 }
 
-export default ComentarioBox;
+const mapStateToProps = state => {
+    return {
+        comentarios: state.comentarios
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+      comentar: comentario => store.dispatch(comentar(comentario)),
+      listar: () => store.dispatch(controller.listar())
+    }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComentarioBox);
